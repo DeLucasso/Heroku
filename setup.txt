@@ -1,0 +1,59 @@
+This is a walkthrough using your app.js to Heroku servers.
+https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment
+
+1.) Make a Git commit:
+git init
+git add .
+git commit -m "Initial Commit"
+
+2.) Login to Heroku
+heroku login // Opens browser, login to Heroku account
+
+3.) Add a Heroku Git remote // https://devcenter.heroku.com/articles/git#create-a-heroku-remote
+heroku create
+
+4.) Create a Procfile and open it with Atom // in your bash
+touch Procfile
+open Procfile -a Atom
+
+5.) To Procfile add:
+web: node app.js
+
+6.) Update your app.js port settings by adding:
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+app.listen(port, function() {
+  console.log("Server has started on port: " + port);
+});
+
+7.) Complete language specific setup // https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment#6-complete-language-specific-setup
+// for Node.js https://devcenter.heroku.com/articles/deploying-nodejs
+
+// To package.json file add look something like this:
+// use node --version to get your current node version
+// after "license": "ISC", add :
+"engines": {
+    "node": "14.x"
+  },
+
+8.) create gitignore file
+touch .gitignore
+open .gitignore -a Atom
+
+// Add this to gitignore file :
+
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
+
+9.) Deploying
+git add .
+git commit -m "YOUR_COMMIT_COMMENT"
+heroku login
+heroku create
+git push heroku main
+
